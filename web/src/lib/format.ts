@@ -11,7 +11,7 @@ export function money(v: number | null | undefined, currency: string | null | un
     try {
         return new Intl.NumberFormat('en-GB', {
             style: 'currency',
-            currency: currency || 'GBP',
+            currency: currency || 'EUR',
             minimumFractionDigits: 2,
             maximumFractionDigits: 6
         }).format(v);

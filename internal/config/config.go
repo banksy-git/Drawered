@@ -61,7 +61,7 @@ func Load() (*Config, error) {
         OIDCClientSecret: env("DRAWERED_OIDC_CLIENT_SECRET", ""),
         OIDCGroupsClaim:  env("DRAWERED_OIDC_GROUPS_CLAIM", "groups"),
         BootstrapAdmins:  splitList(env("DRAWERED_BOOTSTRAP_ADMINS", ""), ","),
-        DefaultCurrency:  strings.ToUpper(env("DRAWERED_DEFAULT_CURRENCY", "GBP")),
+        DefaultCurrency:  strings.ToUpper(env("DRAWERED_DEFAULT_CURRENCY", "EUR")),
         LogLevel:         env("DRAWERED_LOG_LEVEL", "info"),
         DevAuth:          env("DRAWERED_DEV_AUTH", ""),
     }

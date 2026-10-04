@@ -30,7 +30,7 @@
     let supplierSku = $state(init?.supplier_sku ?? '');
     let barcode = $state(init?.barcode ?? '');
     let cost = $state(init?.cost != null ? String(init.cost) : '');
-    let currency = $state(init?.currency ?? session.me?.default_currency ?? 'GBP');
+    let currency = $state(init?.currency ?? session.me?.default_currency ?? 'EUR');
     let minTotal = $state(init?.min_total_quantity != null ? String(init.min_total_quantity) : '');
     let stockRows = $state<{ location_id: number | null; quantity: string }[]>(init ? [] : [{ location_id: null, quantity: '' }]);
 
