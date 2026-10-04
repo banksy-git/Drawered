@@ -88,7 +88,27 @@ mappings under Admin > Claim mappings; set `DRAWERED_OIDC_SCOPES=groups` if
 your IdP only sends groups when asked.
 
 Drawered expects to run behind a TLS-terminating reverse proxy. All
-configuration variables are listed in SPEC.md section 11.
+configuration variables are listed below:
+
+| Variable                       | Default            | Purpose                           |
+|--------------------------------|--------------------|-----------------------------------|
+| `DRAWERED_LISTEN`              | `:8080`            | Listen address.                   |
+| `DRAWERED_BASE_URL`            | (required)         | Public URL, used for OIDC redirect. |
+| `DRAWERED_DATA_DIR`            | `./data`           | DB and file store location.       |
+| `DRAWERED_OIDC_ISSUER`         | (required)         | Issuer URL.                       |
+| `DRAWERED_OIDC_CLIENT_ID`      | (required)         |                                   |
+| `DRAWERED_OIDC_CLIENT_SECRET`  | (optional)         | Omit for public clients (PKCE only). |
+| `DRAWERED_OIDC_SCOPES`         | `openid profile email` | Extra scopes appended.        |
+| `DRAWERED_OIDC_GROUPS_CLAIM`   | `groups`           | Claim name for group membership.  |
+| `DRAWERED_BOOTSTRAP_ADMINS`    | (empty)            | Comma-separated emails/subjects.  |
+| `DRAWERED_DEFAULT_CURRENCY`    | `EUR`              |                                   |
+| `DRAWERED_MAX_IMAGE_MB`        | `25`               |                                   |
+| `DRAWERED_MAX_DOCUMENT_MB`     | `50`               |                                   |
+| `DRAWERED_SESSION_IDLE`        | `168h`             |                                   |
+| `DRAWERED_SESSION_MAX`         | `720h`             |                                   |
+| `DRAWERED_TRUSTED_PROXIES`     | (empty)            | CIDRs whose `X-Forwarded-*` headers are trusted. |
+| `DRAWERED_INSECURE_COOKIES`    | `false`            | Allow non-Secure cookies for local dev. |
+| `DRAWERED_LOG_LEVEL`           | `info`             |                                   |
 
 Data lives in `DRAWERED_DATA_DIR` (default `./data`): `drawered.db` plus
 `files/` and `renditions/`. Back up with Admin > System > Download backup, or
@@ -109,8 +129,10 @@ INVENTREE_TOKEN=... DRAWERED_DATA_DIR=/srv/drawered \
 
 Drop `--dry-run` to import. `INVENTREE_USERNAME` and `INVENTREE_PASSWORD` can
 be used instead of a token. Re-running is safe: anything already imported
-from that server is skipped. See SPEC.md section 18 for exactly what is
-mapped, and `drawered-import -h` for options. With Docker:
+from that server is skipped. 
+
+See `drawered-import -h` for options. With Docker:
+
 `docker run --rm -v drawered-data:/data -e INVENTREE_TOKEN=... --entrypoint /drawered-import drawered --url ...`.
 
 Development
