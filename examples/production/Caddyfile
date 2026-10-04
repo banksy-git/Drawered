@@ -1,0 +1,3 @@
+{$DRAWERED_HOST} {
+    reverse_proxy drawered:8080
+}

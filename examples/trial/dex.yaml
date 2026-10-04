@@ -1,0 +1,19 @@
+# Dex configuration for the quick trial. Not for production use.
+
+issuer: http://localhost:5556/dex
+storage:
+  type: memory
+web:
+  http: 0.0.0.0:5556
+enablePasswordDB: true
+staticPasswords:
+  - email: admin@example.com
+    username: admin
+    userID: 08a8684b-db88-4b73-90a9-3cd1661f5466
+    hash: "$2b$10$kRc9VUTKeSLvY4FKPxfzaean0cgCumF9lrN1FzQMk.KJ4lQoBTO8S"   # "password"
+staticClients:
+  - id: drawered
+    name: Drawered
+    secret: trial-secret
+    redirectURIs:
+      - http://localhost:8080/auth/callback

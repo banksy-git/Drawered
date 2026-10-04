@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en-GB">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="color-scheme" content="light dark" />
+        <link rel="icon" href="%sveltekit.assets%/favicon.svg" />
+        <title>Drawered</title>
+        <script>
+            (function () {
+                var pref = 'system';
+                try { pref = localStorage.getItem('drawered-theme') || 'system'; } catch (e) {}
+                var dark = pref === 'dark' || (pref === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
+                document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+            })();
+        </script>
+        %sveltekit.head%
+    </head>
+    <body data-sveltekit-preload-data="hover">
+        <div style="display: contents">%sveltekit.body%</div>
+    </body>
+</html>

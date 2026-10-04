@@ -1,0 +1,47 @@
+# Production install: Drawered behind Caddy, which obtains a TLS certificate
+# automatically. Copy env.example to .env, fill it in, then run
+# `docker compose up -d` (or `podman compose up -d`) in this directory.
+
+services:
+  drawered:
+    image: ghcr.io/banksy-git/drawered:${DRAWERED_VERSION:-latest}
+    restart: unless-stopped
+    environment:
+      DRAWERED_BASE_URL: https://${DRAWERED_HOST:?set DRAWERED_HOST in .env}
+      DRAWERED_OIDC_ISSUER: ${DRAWERED_OIDC_ISSUER:?set DRAWERED_OIDC_ISSUER in .env}
+      DRAWERED_OIDC_CLIENT_ID: ${DRAWERED_OIDC_CLIENT_ID:-drawered}
+      DRAWERED_OIDC_CLIENT_SECRET: ${DRAWERED_OIDC_CLIENT_SECRET:-}
+      DRAWERED_OIDC_SCOPES: ${DRAWERED_OIDC_SCOPES:-}
+      DRAWERED_BOOTSTRAP_ADMINS: ${DRAWERED_BOOTSTRAP_ADMINS:-}
+      DRAWERED_TRUSTED_PROXIES: 172.30.0.0/24
+    volumes:
+      - drawered-data:/data
+    networks:
+      - drawered
+
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    environment:
+      DRAWERED_HOST: ${DRAWERED_HOST}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro,z
+      - caddy-data:/data
+      - caddy-config:/config
+    networks:
+      - drawered
+
+networks:
+  drawered:
+    ipam:
+      config:
+        - subnet: 172.30.0.0/24   # must match DRAWERED_TRUSTED_PROXIES
+
+volumes:
+  drawered-data:
+  caddy-data:
+  caddy-config:

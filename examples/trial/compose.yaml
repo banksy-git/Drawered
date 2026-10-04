@@ -1,0 +1,33 @@
+# Quick trial: Drawered plus a throwaway Dex identity provider with one
+# static user. Run `docker compose up` (or `podman compose up`) in this
+# directory, open http://localhost:8080 and log in as
+# admin@example.com / password.
+
+services:
+  dex:
+    image: ghcr.io/dexidp/dex:latest
+    command: ["dex", "serve", "/etc/dex/config.yaml"]
+    volumes:
+      - ./dex.yaml:/etc/dex/config.yaml:ro,z
+    ports:
+      - "8080:8080"   # Drawered, which shares this container's network
+      - "5556:5556"   # Dex
+
+  drawered:
+    image: ghcr.io/banksy-git/drawered:latest
+    # Sharing Dex's network namespace lets both the browser and Drawered
+    # reach the issuer at the same http://localhost:5556 address.
+    network_mode: service:dex
+    environment:
+      DRAWERED_BASE_URL: http://localhost:8080
+      DRAWERED_INSECURE_COOKIES: "true"
+      DRAWERED_OIDC_ISSUER: http://localhost:5556/dex
+      DRAWERED_OIDC_CLIENT_ID: drawered
+      DRAWERED_OIDC_CLIENT_SECRET: trial-secret
+      DRAWERED_BOOTSTRAP_ADMINS: admin@example.com
+    volumes:
+      - drawered-data:/data
+    restart: on-failure   # until Dex is ready to answer discovery
+
+volumes:
+  drawered-data:

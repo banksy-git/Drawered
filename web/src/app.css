@@ -1,0 +1,95 @@
+@import 'tailwindcss';
+
+/* Dark mode follows data-theme on <html>, which tracks the OS preference
+   unless the user picks a theme explicitly. */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+@theme {
+    --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --color-accent-50: var(--color-indigo-50);
+    --color-accent-100: var(--color-indigo-100);
+    --color-accent-500: var(--color-indigo-500);
+    --color-accent-600: var(--color-indigo-600);
+    --color-accent-700: var(--color-indigo-700);
+}
+
+@layer base {
+    html {
+        @apply bg-zinc-50 text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-100;
+    }
+    [hidden] {
+        display: none !important;
+    }
+}
+
+@layer components {
+    .btn {
+        @apply inline-flex min-h-9 cursor-pointer items-center justify-center gap-1.5 rounded-md border border-zinc-300 bg-white px-3 py-1.5 text-sm font-medium text-zinc-800 shadow-xs transition-colors hover:bg-zinc-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500 disabled:cursor-not-allowed disabled:opacity-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800;
+    }
+    .btn-primary {
+        @apply border-accent-600 bg-accent-600 text-white hover:bg-accent-700 dark:border-accent-500 dark:bg-accent-600 dark:hover:bg-accent-500;
+    }
+    .btn-danger {
+        @apply border-red-600 bg-red-600 text-white hover:bg-red-700 dark:border-red-600 dark:bg-red-700 dark:hover:bg-red-600;
+    }
+    .btn-ghost {
+        @apply border-transparent bg-transparent shadow-none hover:bg-zinc-200/60 dark:bg-transparent dark:hover:bg-zinc-800;
+    }
+    .btn-sm {
+        @apply min-h-7 px-2 py-1 text-xs;
+    }
+    .input {
+        @apply block w-full rounded-md border border-zinc-300 bg-white px-3 py-1.5 text-sm text-zinc-900 shadow-xs placeholder:text-zinc-400 focus:border-accent-500 focus:outline-2 focus:outline-accent-500/30 disabled:opacity-60 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100;
+    }
+    .label {
+        @apply mb-1 block text-xs font-medium tracking-wide text-zinc-600 uppercase dark:text-zinc-400;
+    }
+    .card {
+        @apply rounded-lg border border-zinc-200 bg-white shadow-xs dark:border-zinc-800 dark:bg-zinc-900;
+    }
+    .badge {
+        @apply inline-flex items-center gap-1 rounded-full bg-zinc-100 px-2 py-0.5 text-xs font-medium text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300;
+    }
+    .link {
+        @apply text-accent-600 hover:underline dark:text-indigo-400;
+    }
+    .muted {
+        @apply text-zinc-500 dark:text-zinc-400;
+    }
+    .table {
+        @apply w-full text-left text-sm;
+    }
+    .table th {
+        @apply border-b border-zinc-200 px-3 py-2 text-xs font-medium tracking-wide text-zinc-500 uppercase dark:border-zinc-800 dark:text-zinc-400;
+    }
+    .table td {
+        @apply border-b border-zinc-100 px-3 py-2 align-middle dark:border-zinc-800/70;
+    }
+    .prose-md {
+        @apply text-sm leading-relaxed;
+    }
+    .prose-md :where(p, ul, ol, pre, blockquote, table) {
+        @apply my-2;
+    }
+    .prose-md :where(ul) {
+        @apply list-disc pl-5;
+    }
+    .prose-md :where(ol) {
+        @apply list-decimal pl-5;
+    }
+    .prose-md :where(h1, h2, h3, h4) {
+        @apply mt-4 mb-2 font-semibold;
+    }
+    .prose-md :where(code) {
+        @apply rounded bg-zinc-100 px-1 py-0.5 text-[0.85em] dark:bg-zinc-800;
+    }
+    .prose-md :where(pre) {
+        @apply overflow-x-auto rounded bg-zinc-100 p-3 dark:bg-zinc-800;
+    }
+    .prose-md :where(a) {
+        @apply text-accent-600 underline dark:text-indigo-400;
+    }
+    .prose-md :where(th, td) {
+        @apply border border-zinc-200 px-2 py-1 dark:border-zinc-700;
+    }
+}
