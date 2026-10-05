@@ -3,6 +3,8 @@
 Drawered
 ========
 
+Full writeup here: https://paulbanks.org/projects/drawered/
+
 A self-hosted parts-bin inventory: a user-defined hierarchy of locations,
 parts stocked in any number of them, full-text search, a complete audit
 trail, and OIDC sign-in with fine-grained roles. One Go binary with an
